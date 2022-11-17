@@ -8,7 +8,7 @@ import jakarta.validation.ValidatorFactory;
 import java.util.Set;
 
 public class ValidateServices <T> {
-    Validator validator;
+    private final Validator validator;
 
     public ValidateServices() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();

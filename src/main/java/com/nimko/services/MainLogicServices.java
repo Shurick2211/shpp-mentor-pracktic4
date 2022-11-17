@@ -18,9 +18,9 @@ public class MainLogicServices {
     public MainLogicServices() {
         CreateTables.createTables();
         new CreateStore(NUM_STORES).addStoresInDb();
-        new CreateProductsAndAddToStore(NUM_STORES,NUM_PRODS)
-                .createProducts()
-                .addProductInStores();
+        CreateProductsAndAddToStore cP = new CreateProductsAndAddToStore(NUM_STORES,NUM_PRODS);
+        cP.createProducts();
+        cP.addProductInStores();
     }
 
     public void printResult(){

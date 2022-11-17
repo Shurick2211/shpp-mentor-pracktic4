@@ -10,7 +10,7 @@ import java.sql.*;
 public class DataBase {
     private static final Logger log = LoggerFactory.getLogger(DataBase.class);
     private final Connection connection;
-    private final Statement statement;
+
 
     public DataBase(String propertiesFile) {
         LoadProperties properties = new LoadProperties(propertiesFile);
@@ -19,7 +19,6 @@ public class DataBase {
                 + properties.getProperty("db.pass");
         try {
             connection = DriverManager.getConnection(url);
-            statement = connection.createStatement();
         } catch (SQLException e) {
             log.error("Connection Failed!",e);
             throw new MyRuntimeException(e);
@@ -28,7 +27,13 @@ public class DataBase {
     }
 
     public Statement getStatement(){
-        return this.statement;
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            log.warn("Created statement was fail!",e);
+        }
+        return statement;
     }
 
     public PreparedStatement getPreparedStatement(String sql) {
@@ -36,11 +41,10 @@ public class DataBase {
         try {
             statement1 = connection.prepareStatement(sql);
         } catch (SQLException e) {
-            log.warn("Creates preparedStatement was fail!",e);
+            log.warn("Created preparedStatement was fail!",e);
         }
         return statement1;
     }
-
 
     public void closeConnection(){
         try {
@@ -51,5 +55,4 @@ public class DataBase {
         }
         log.info("Connection to database was close!");
     }
-
 }
