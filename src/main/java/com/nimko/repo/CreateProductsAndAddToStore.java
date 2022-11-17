@@ -12,21 +12,24 @@ import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class DbOperationProduct {
-    private static final Logger log = LoggerFactory.getLogger(DbOperationProduct.class);
+public class CreateProductsAndAddToStore {
+    private static final Logger log = LoggerFactory.getLogger(CreateProductsAndAddToStore.class);
     private static final int BATCH_SIZE = 500;
     private final int numStores;
     private final int numProducts;
     private final PreparedStatement statement;
     private final PreparedStatement statementPos;
 
-    public DbOperationProduct(int numStores, int numProducts) {
+    private final DataBase db;
+
+    public CreateProductsAndAddToStore(int numStores, int numProducts) {
         this.numStores = numStores;
         this.numProducts = numProducts;
         String sql = "insert into products(id,type,brand,model,price) values(?,?,?,?,?);";
         statement = new DataBase("myApp.properties").getPreparedStatement(sql);
         String sqlPos = "insert into pos(store_id, prod_id) values(?,?);";
-        statementPos = new DataBase("myApp.properties").getPreparedStatement(sqlPos);
+        db = new DataBase("myApp.properties");
+        statementPos = db.getPreparedStatement(sqlPos);
     }
 
     public Stream<Product> createSqlForAddProductsInDb() {
@@ -34,7 +37,7 @@ public class DbOperationProduct {
         return  Stream.generate(generator::getProduct).limit(numProducts);
     }
 
-    public DbOperationProduct createProducts(){
+    public CreateProductsAndAddToStore createProducts(){
         try {
             statement.getConnection().setAutoCommit(false);
         } catch (SQLException e) {
@@ -52,10 +55,11 @@ public class DbOperationProduct {
                 if (prod.getId() % BATCH_SIZE == 0) {
                         statement.executeBatch();
                         statement.getConnection().commit();
-                    log.info("Receiver of product done!");
+                   // log.info("Receiver of product done!");
                     statement.clearBatch();
                 }
             } catch (SQLException e) { log.warn("Insert products fail!",e);}});
+        log.info("Products added in the table!");
         return this;
     }
 
@@ -75,10 +79,11 @@ public class DbOperationProduct {
                 if (x % BATCH_SIZE == 0) {
                         statementPos.executeBatch();
                         statementPos.getConnection().commit();
-                    log.info("Receiver of pos done!");
+                    //log.info("Receiver of pos done!");
                     statementPos.clearBatch();
                 }
             } catch (SQLException e) { log.warn("Insert products in stores fail!",e);}});
         log.info("Products added in stores!");
+        db.closeConnection();
     }
 }

@@ -40,7 +40,6 @@ public class LoadProperties {
      * @return the value.
      */
     public String getProperty(String inProp) {
-        log.debug("Return property: {}", inProp);
         return props.getProperty(inProp);
     }
 }

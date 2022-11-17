@@ -12,21 +12,18 @@ import java.util.Scanner;
  */
 public class Main{
     private static final int NUM_STORES = 10;
-    private static final int NUM_PRODS = 2000;
+    private static final int NUM_PRODS = 3000000;
 
     private static final Logger log = LoggerFactory.getLogger(Main.class);
     public static void main( String[] args ){
-        Tables.createTables();
-        new DbOperationStore(NUM_STORES).addStoresInDb();
-        new DbOperationProduct(NUM_STORES,NUM_PRODS)
+        CreateTables.createTables();
+        new CreateStore(NUM_STORES).addStoresInDb();
+        new CreateProductsAndAddToStore(NUM_STORES,NUM_PRODS)
                 .createProducts()
                 .addProductInStores();
-
         Scanner scanner = new Scanner(System.in);
         log.info("Enter type of product?");
-        log.info("It's address store, where maximal number products of entered type: {}",GetOperation.getAddress(scanner.nextLine()));
-
-
-
+        log.info("It's address store, where maximal number products of entered type: {}",
+                GetOperation.getAddress(scanner.nextLine().trim()));
     }
 }

@@ -8,13 +8,14 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class DbOperationStore {
-    private static final Logger log = LoggerFactory.getLogger(DbOperationStore.class);
+public class CreateStore {
+    private static final Logger log = LoggerFactory.getLogger(CreateStore.class);
     private final int numStore;
 
-    public DbOperationStore(int numStore) {
+    public CreateStore(int numStore) {
         this.numStore = numStore;
     }
 
@@ -28,17 +29,20 @@ public class DbOperationStore {
     }
 
     public void addStoresInDb(){
-        Statement statement = new DataBase("myApp.properties").getStatement();
+        DataBase db = new DataBase("myApp.properties");
+        Statement statement = db.getStatement();
         createSqlForAdd().forEach(sql -> {
             try {
                 statement.addBatch(sql);
             } catch (SQLException e) { log.warn("Insert store fail!",e);}});
+
         try {
-            statement.executeBatch();
+            int[] counts = statement.executeBatch();
+            log.info("{} stores was create", Arrays.stream(counts).filter(n -> n >= 0).count());
             statement.close();
         } catch (SQLException e) {
             log.warn("Store creates fail!",e);
         }
-        log.info("{} stores was create", numStore);
+        db.closeConnection();
     }
 }

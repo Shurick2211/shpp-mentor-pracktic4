@@ -7,21 +7,21 @@ import org.slf4j.LoggerFactory;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public final class Tables {
-    private static final Logger log = LoggerFactory.getLogger(Tables.class);
+public final class CreateTables {
+    private static final Logger log = LoggerFactory.getLogger(CreateTables.class);
 
-    private Tables() {
+    private CreateTables() {
     }
 
     public static void createTables(){
         DataBase dataBase = new DataBase("myApp.properties");
-        Tables tables = new Tables();
+        CreateTables createTables = new CreateTables();
         Statement statement = dataBase.getStatement();
         try {
-            statement.addBatch(tables.dropTables());
-            statement.addBatch(tables.creatTableProduct());
-            statement.addBatch(tables.creatTableStores());
-            statement.addBatch(tables.creatTablePOS());
+            statement.addBatch(createTables.dropTables());
+            statement.addBatch(createTables.creatTableProduct());
+            statement.addBatch(createTables.creatTableStores());
+            statement.addBatch(createTables.creatTablePOS());
             statement.executeBatch();
             statement.close();
         } catch (SQLException e) {
