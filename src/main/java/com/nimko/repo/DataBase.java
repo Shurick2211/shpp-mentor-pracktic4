@@ -5,10 +5,7 @@ import com.nimko.util.MyRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DataBase {
     private static final Logger log = LoggerFactory.getLogger(DataBase.class);
@@ -32,6 +29,16 @@ public class DataBase {
 
     public Statement getStatement(){
         return this.statement;
+    }
+
+    public PreparedStatement getPreparedStatement(String sql) {
+        PreparedStatement statement1 = null;
+        try {
+            statement1 = connection.prepareStatement(sql);
+        } catch (SQLException e) {
+            log.warn("Creates preparedStatement was fail!",e);
+        }
+        return statement1;
     }
 
 

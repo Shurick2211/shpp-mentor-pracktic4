@@ -9,12 +9,15 @@ import java.util.Objects;
 public class Store {
     @NotNull
     @Min(value = 1)
-    private final int id;
+    private int id;
     @NotNull
-    private final String name;
+    private String name;
     @NotNull
-    private final String address;
+    private  String address;
     private List<Product> products;
+
+    public Store() {
+    }
 
     public Store(int id, String name, String address) {
         this.id = id;
@@ -40,6 +43,18 @@ public class Store {
 
     public List<Product> getProducts() {
         return products;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override
