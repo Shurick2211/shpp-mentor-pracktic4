@@ -14,7 +14,7 @@ public final class CreateTables {
     }
 
     public static void createTables(){
-        DataBase dataBase = new DataBase("myApp.properties");
+        DataBase dataBase = new DataBase();
         CreateTables createTables = new CreateTables();
         Statement statement = dataBase.getStatement();
         try {

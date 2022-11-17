@@ -20,7 +20,7 @@ public class GetOperation {
     }
 
     public static String getAddress(String type) {
-        DataBase db = new DataBase("myApp.properties");
+        DataBase db = new DataBase();
         PreparedStatement statement = db
                 .getPreparedStatement(SQL_ADDRESS);
         try {

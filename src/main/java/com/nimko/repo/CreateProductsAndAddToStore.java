@@ -26,9 +26,9 @@ public class CreateProductsAndAddToStore {
         this.numStores = numStores;
         this.numProducts = numProducts;
         String sql = "insert into products(id,type,brand,model,price) values(?,?,?,?,?);";
-        statement = new DataBase("myApp.properties").getPreparedStatement(sql);
+        statement = new DataBase().getPreparedStatement(sql);
         String sqlPos = "insert into pos(store_id, prod_id) values(?,?);";
-        db = new DataBase("myApp.properties");
+        db = new DataBase();
         statementPos = db.getPreparedStatement(sqlPos);
     }
 

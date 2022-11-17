@@ -11,14 +11,17 @@ public class DataBase {
     private static final Logger log = LoggerFactory.getLogger(DataBase.class);
     private final Connection connection;
 
-
-    public DataBase(String propertiesFile) {
-        LoadProperties properties = new LoadProperties(propertiesFile);
-        String url =properties.getProperty("db.url") + "?user="
+    private static final String URL;
+    private static final String APP_PROPERTIES = "myApp.properties";
+    static { LoadProperties properties = new LoadProperties(APP_PROPERTIES);
+       URL =properties.getProperty("db.url") + "?user="
                 + properties.getProperty("db.user") + "&password="
                 + properties.getProperty("db.pass");
+    }
+
+    public DataBase() {
         try {
-            connection = DriverManager.getConnection(url);
+            connection = DriverManager.getConnection(URL);
         } catch (SQLException e) {
             log.error("Connection Failed!",e);
             throw new MyRuntimeException(e);

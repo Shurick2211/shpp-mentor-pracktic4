@@ -29,7 +29,7 @@ public class CreateStore {
     }
 
     public void addStoresInDb(){
-        DataBase db = new DataBase("myApp.properties");
+        DataBase db = new DataBase();
         Statement statement = db.getStatement();
         createSqlForAdd().forEach(sql -> {
             try {
