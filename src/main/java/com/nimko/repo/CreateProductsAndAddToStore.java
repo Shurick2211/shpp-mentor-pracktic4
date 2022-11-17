@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class CreateProductsAndAddToStore {
     private static final Logger log = LoggerFactory.getLogger(CreateProductsAndAddToStore.class);
-    private static final int BATCH_SIZE = 500;
+    private static final int BATCH_SIZE = 1000;
     private final int numStores;
     private final int numProducts;
     private final PreparedStatement statement;
@@ -55,7 +55,6 @@ public class CreateProductsAndAddToStore {
                 if (prod.getId() % BATCH_SIZE == 0) {
                         statement.executeBatch();
                         statement.getConnection().commit();
-                   // log.info("Receiver of product done!");
                     statement.clearBatch();
                 }
             } catch (SQLException e) { log.warn("Insert products fail!",e);}});
@@ -79,7 +78,6 @@ public class CreateProductsAndAddToStore {
                 if (x % BATCH_SIZE == 0) {
                         statementPos.executeBatch();
                         statementPos.getConnection().commit();
-                    //log.info("Receiver of pos done!");
                     statementPos.clearBatch();
                 }
             } catch (SQLException e) { log.warn("Insert products in stores fail!",e);}});
