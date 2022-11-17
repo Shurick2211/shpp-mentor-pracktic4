@@ -13,17 +13,24 @@ import java.util.Scanner;
 public class Main{
     private static final int NUM_STORES = 10;
     private static final int NUM_PRODS = 3000000;
+    private static final String TYPE = "type";
 
     private static final Logger log = LoggerFactory.getLogger(Main.class);
     public static void main( String[] args ){
+        String sysProp = System.getProperty(TYPE);
         CreateTables.createTables();
         new CreateStore(NUM_STORES).addStoresInDb();
         new CreateProductsAndAddToStore(NUM_STORES,NUM_PRODS)
                 .createProducts()
                 .addProductInStores();
+
+        log.info("It's address store, where maximal number products of entered type: {}",
+                 GetOperation.getAddress(sysProp == null ? getTypeFromConsol() : sysProp));
+    }
+
+    private static String getTypeFromConsol(){
         Scanner scanner = new Scanner(System.in);
         log.info("Enter type of product?");
-        log.info("It's address store, where maximal number products of entered type: {}",
-                GetOperation.getAddress(scanner.nextLine().trim()));
+        return scanner.nextLine().trim();
     }
 }
