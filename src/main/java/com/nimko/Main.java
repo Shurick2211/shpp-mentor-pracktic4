@@ -25,10 +25,10 @@ public class Main{
                 .addProductInStores();
 
         log.info("It's address store, where maximal number products of entered type: {}",
-                 GetOperation.getAddress(sysProp == null ? getTypeFromConsol() : sysProp));
+                 GetOperation.getAddress(sysProp == null ? getTypeFromConsole() : sysProp));
     }
 
-    private static String getTypeFromConsol(){
+    private static String getTypeFromConsole(){
         Scanner scanner = new Scanner(System.in);
         log.info("Enter type of product?");
         return scanner.nextLine().trim();
