@@ -4,6 +4,7 @@ import com.nimko.repo.CreateProductsAndAddToStore;
 import com.nimko.repo.CreateStore;
 import com.nimko.repo.CreateTables;
 import com.nimko.repo.GetOperation;
+import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,20 +14,39 @@ public class MainLogicServices {
     private static final int NUM_STORES = 10;
     private static final int NUM_PRODS = 3000000;
     private static final String TYPE = "type";
-
+    private final StopWatch stopWatch = StopWatch.createStarted();
     private static final Logger log = LoggerFactory.getLogger(MainLogicServices.class);
     public MainLogicServices() {
+
         CreateTables.createTables();
+        stopWatch.stop();
+        log.info("Time created table: {}", stopWatch.getTime());
+        stopWatch.reset();
+        stopWatch.start();
         new CreateStore(NUM_STORES).addStoresInDb();
+        stopWatch.stop();
+        log.info("Time created stores table: {}", stopWatch.getTime());
+        stopWatch.reset();
         CreateProductsAndAddToStore cP = new CreateProductsAndAddToStore(NUM_STORES,NUM_PRODS);
+        stopWatch.start();
         cP.createProducts();
+        stopWatch.stop();
+        log.info("Time created products table: {}", stopWatch.getTime());
+        stopWatch.reset();
+        stopWatch.start();
         cP.addProductInStores();
+        stopWatch.stop();
+        log.info("Time created POS table: {}", stopWatch.getTime());
+        stopWatch.reset();
     }
 
     public void printResult(){
         String sysProp = System.getProperty(TYPE);
+        stopWatch.start();
         log.info("It's address store, where maximal number products of entered type: {}",
                 GetOperation.getAddress(sysProp == null ? getTypeFromConsole() : sysProp));
+        stopWatch.stop();
+        log.info("Time for searched address: {}", stopWatch.getTime());
     }
 
     private String getTypeFromConsole(){

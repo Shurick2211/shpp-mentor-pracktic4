@@ -2,6 +2,7 @@ package com.nimko.repo;
 
 import com.nimko.model.Product;
 import com.nimko.services.ProductGenerator;
+import com.nimko.services.ValidateServices;
 import com.nimko.util.MyRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,10 +35,11 @@ public class CreateProductsAndAddToStore {
 
     public Stream<Product> createSqlForAddProductsInDb() {
         ProductGenerator generator = new ProductGenerator();
-        return  Stream.generate(generator::getProduct).limit(numProducts);
+        ValidateServices<Product> validateServices = new ValidateServices<>();
+        return  Stream.generate(generator::getProduct).limit(numProducts).filter(validateServices::isValid);
     }
 
-    public CreateProductsAndAddToStore createProducts(){
+    public void createProducts(){
         try {
             statement.getConnection().setAutoCommit(false);
         } catch (SQLException e) {
@@ -59,7 +61,6 @@ public class CreateProductsAndAddToStore {
                 }
             } catch (SQLException e) { log.warn("Insert products fail!",e);}});
         log.info("Products added in the table!");
-        return this;
     }
 
     public void addProductInStores() {
