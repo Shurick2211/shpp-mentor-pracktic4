@@ -17,7 +17,6 @@ public class MainLogicServices {
     private final StopWatch stopWatch = StopWatch.createStarted();
     private static final Logger log = LoggerFactory.getLogger(MainLogicServices.class);
     public MainLogicServices() {
-
         CreateTables.createTables();
         stopWatch.stop();
         log.info("Time created table: {}", stopWatch.getTime());

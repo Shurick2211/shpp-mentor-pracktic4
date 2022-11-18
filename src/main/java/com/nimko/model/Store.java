@@ -3,8 +3,6 @@ package com.nimko.model;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Objects;
-
 public class Store {
     @NotNull
     @Min(value = 1)
@@ -32,25 +30,4 @@ public class Store {
         return address;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Store)) return false;
-        Store store = (Store) o;
-        return getName().equals(store.getName()) && getAddress().equals(store.getAddress());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getAddress());
-    }
-
-    @Override
-    public String toString() {
-        return "Store{" +
-                "id="+id+
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
 }

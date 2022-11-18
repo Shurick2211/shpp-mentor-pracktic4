@@ -3,8 +3,6 @@ package com.nimko.model;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Objects;
-
 public class Product {
     @NotNull
     @Min(value = 1)
@@ -46,27 +44,4 @@ public class Product {
         return model;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Product)) return false;
-        Product product = (Product) o;
-        return getPrice() == product.getPrice() && getType().equals(product.getType()) && getBrand().equals(product.getBrand()) && model.equals(product.model);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getType(), getBrand(), model, getPrice());
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id="+id+
-                "type='" + type + '\'' +
-                ", brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", price=" + price +
-                '}';
-    }
 }

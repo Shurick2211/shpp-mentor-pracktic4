@@ -26,7 +26,6 @@ public class DataBase {
             log.error("Connection Failed!",e);
             throw new MyRuntimeException(e);
         }
-        log.info("Connection to database was open!");
     }
 
     public Statement getStatement(){
@@ -56,6 +55,5 @@ public class DataBase {
             log.error("Connection don't close",e);
             throw new MyRuntimeException(e);
         }
-        log.info("Connection to database was close!");
     }
 }
