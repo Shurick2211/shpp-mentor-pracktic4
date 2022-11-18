@@ -19,23 +19,23 @@ public class MainLogicServices {
     public MainLogicServices() {
         CreateTables.createTables();
         stopWatch.stop();
-        log.info("Time created table: {}", stopWatch.getTime());
+        log.info("Time created table: {} ms", stopWatch.getTime());
         stopWatch.reset();
         stopWatch.start();
         new CreateStore(NUM_STORES).addStoresInDb();
         stopWatch.stop();
-        log.info("Time created stores table: {}", stopWatch.getTime());
+        log.info("Time created stores table: {} ms", stopWatch.getTime());
         stopWatch.reset();
         CreateProductsAndAddToStore cP = new CreateProductsAndAddToStore(NUM_STORES,NUM_PRODS);
         stopWatch.start();
         cP.createProducts();
         stopWatch.stop();
-        log.info("Time created products table: {}", stopWatch.getTime());
+        log.info("Time created products table: {} ms", stopWatch.getTime());
         stopWatch.reset();
         stopWatch.start();
         cP.addProductInStores();
         stopWatch.stop();
-        log.info("Time created POS table: {}", stopWatch.getTime());
+        log.info("Time created POS table: {} ms", stopWatch.getTime());
         stopWatch.reset();
     }
 
