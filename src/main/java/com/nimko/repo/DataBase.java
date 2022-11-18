@@ -12,16 +12,18 @@ public class DataBase {
     private final Connection connection;
 
     private static final String URL;
-    private static final String APP_PROPERTIES = "myApp.properties";
+    private static final String USER;
+    private static final String PASS;
+    private static final String APP_PROPERTIES = "herokuDb.properties";
     static { LoadProperties properties = new LoadProperties(APP_PROPERTIES);
-       URL =properties.getProperty("db.url") + "?user="
-                + properties.getProperty("db.user") + "&password="
-                + properties.getProperty("db.pass");
+       URL = properties.getProperty("db.url");
+       USER = properties.getProperty("db.user");
+       PASS = properties.getProperty("db.pass");
     }
 
     public DataBase() {
         try {
-            connection = DriverManager.getConnection(URL);
+            connection = DriverManager.getConnection(URL,USER,PASS);
         } catch (SQLException e) {
             log.error("Connection Failed!",e);
             throw new MyRuntimeException(e);
