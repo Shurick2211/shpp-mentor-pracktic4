@@ -14,6 +14,7 @@ public class DataBase {
     private static final String URL;
     private static final String USER;
     private static final String PASS;
+    //private static final String APP_PROPERTIES = "myApp.properties";
     private static final String APP_PROPERTIES = "herokuDb.properties";
     static { LoadProperties properties = new LoadProperties(APP_PROPERTIES);
        URL = properties.getProperty("db.url");

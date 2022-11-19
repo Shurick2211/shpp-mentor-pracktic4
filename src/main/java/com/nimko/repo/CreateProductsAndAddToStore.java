@@ -36,7 +36,8 @@ public class CreateProductsAndAddToStore {
     public Stream<Product> createSqlForAddProductsInDb() {
         ProductGenerator generator = new ProductGenerator();
         ValidateServices<Product> validateServices = new ValidateServices<>();
-        return  Stream.generate(generator::getProduct).limit(numProducts).filter(validateServices::isValid);
+        return  Stream.generate(generator::getProduct).filter(validateServices::isValid)
+                .limit(numProducts);
     }
 
     public void createProducts(){

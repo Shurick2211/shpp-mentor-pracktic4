@@ -27,7 +27,8 @@ public class StoreGenerator {
     private  String address() {
         Random r = new Random();
         final int max = 200;
-        return STREETS.get(r.nextInt(STREETS.size() - 1)) + "-" + r.nextInt(max);
+        return STREETS.get(r.nextInt(STREETS.size() - 1)) + "-"
+                + (1 + r.nextInt(max));
     }
 
     private String name() {
