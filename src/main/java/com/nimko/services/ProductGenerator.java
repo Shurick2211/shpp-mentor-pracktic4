@@ -1,6 +1,6 @@
 package com.nimko.services;
 
-import com.nimko.model.Product;
+import com.nimko.model.ProductDto;
 
 import java.util.List;
 import java.util.Random;
@@ -16,10 +16,10 @@ public class ProductGenerator {
         id = 1;
     }
 
-    public Product getProduct(){
+    public ProductDto getProduct(){
         final int min = 1000;
         final int max = 20000;
-        return new Product(id++, TYPES.get(RANDOM.nextInt(TYPES.size() - 1)),
+        return new ProductDto(id++, TYPES.get(RANDOM.nextInt(TYPES.size() - 1)),
                 BRANDS.get(RANDOM.nextInt(BRANDS.size() - 1)),
                 getModel(), min + RANDOM.nextInt(max));
     }

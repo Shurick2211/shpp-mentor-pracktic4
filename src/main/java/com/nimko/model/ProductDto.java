@@ -3,7 +3,7 @@ package com.nimko.model;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-public class Product {
+public class ProductDto {
     @NotNull
     @Min(value = 1)
     private final int id;
@@ -16,7 +16,7 @@ public class Product {
     @Min(value = 1000)
     private final int price;
 
-    public Product(int id, String type, String brand, String model, int price) {
+    public ProductDto(int id, String type, String brand, String model, int price) {
         this.id = id;
         this.type = type;
         this.brand = brand;

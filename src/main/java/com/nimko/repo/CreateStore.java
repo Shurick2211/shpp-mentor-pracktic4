@@ -1,6 +1,6 @@
 package com.nimko.repo;
 
-import com.nimko.model.Store;
+import com.nimko.model.StoreDto;
 import com.nimko.services.StoreGenerator;
 import com.nimko.services.ValidateServices;
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ public class CreateStore {
 
     public Stream<String> createSqlForAdd() {
         StoreGenerator gen = StoreGenerator.getGen();
-        ValidateServices<Store> validateServices = new ValidateServices<>();
+        ValidateServices<StoreDto> validateServices = new ValidateServices<>();
         return Stream.generate(gen::getStore).filter(validateServices::isValid).limit(numStore)
                 .map(store -> "insert into stores(id,store_name,store_address)" +
                         "values("+store.getId() + ",'" + store.getName() + "','"

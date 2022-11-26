@@ -1,6 +1,6 @@
 package com.nimko.services;
 
-import com.nimko.model.Store;
+import com.nimko.model.StoreDto;
 
 import java.util.List;
 import java.util.Random;
@@ -20,8 +20,8 @@ public class StoreGenerator {
         return new StoreGenerator();
     }
 
-    public Store getStore() {
-        return new Store(n, name(), address());
+    public StoreDto getStore() {
+        return new StoreDto(n, name(), address());
     }
 
     private  String address() {

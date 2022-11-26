@@ -3,7 +3,7 @@ package com.nimko.model;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-public class Store {
+public class StoreDto {
     @NotNull
     @Min(value = 1)
     private final int id;
@@ -12,7 +12,7 @@ public class Store {
     @NotNull
     private final String address;
 
-    public Store(int id, String name, String address) {
+    public StoreDto(int id, String name, String address) {
         this.id = id;
         this.name = name;
         this.address = address;

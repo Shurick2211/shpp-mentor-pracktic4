@@ -1,6 +1,6 @@
 package com.nimko.repo;
 
-import com.nimko.model.Product;
+import com.nimko.model.ProductDto;
 import com.nimko.services.ProductGenerator;
 import com.nimko.services.ValidateServices;
 import com.nimko.util.MyRuntimeException;
@@ -33,9 +33,9 @@ public class CreateProductsAndAddToStore {
         statementPos = db.getPreparedStatement(sqlPos);
     }
 
-    public Stream<Product> createSqlForAddProductsInDb() {
+    public Stream<ProductDto> createSqlForAddProductsInDb() {
         ProductGenerator generator = new ProductGenerator();
-        ValidateServices<Product> validateServices = new ValidateServices<>();
+        ValidateServices<ProductDto> validateServices = new ValidateServices<>();
         return  Stream.generate(generator::getProduct).filter(validateServices::isValid)
                 .limit(numProducts);
     }
@@ -58,6 +58,7 @@ public class CreateProductsAndAddToStore {
                 if (prod.getId() % BATCH_SIZE == 0) {
                         statement.executeBatch();
                         statement.getConnection().commit();
+                        log.info("Batch add {}", prod.getId());
                     statement.clearBatch();
                 }
             } catch (SQLException e) { log.warn("Insert products fail!",e);}});
@@ -80,6 +81,7 @@ public class CreateProductsAndAddToStore {
                 if (x % BATCH_SIZE == 0) {
                         statementPos.executeBatch();
                         statementPos.getConnection().commit();
+                    log.info("Batch add {}", x);
                     statementPos.clearBatch();
                 }
             } catch (SQLException e) { log.warn("Insert products in stores fail!",e);}});
