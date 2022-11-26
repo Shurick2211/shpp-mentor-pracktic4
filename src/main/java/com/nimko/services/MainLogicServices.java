@@ -2,7 +2,6 @@ package com.nimko.services;
 
 import com.nimko.repo.CreateProductsAndAddToStore;
 import com.nimko.repo.CreateStore;
-import com.nimko.repo.CreateTables;
 import com.nimko.repo.GetOperation;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
@@ -18,24 +17,28 @@ public class MainLogicServices {
     private final StopWatch stopWatch = StopWatch.createStarted();
     private static final Logger log = LoggerFactory.getLogger(MainLogicServices.class);
     public MainLogicServices() {
-        CreateTables.createTables();
+
         stopWatch.stop();
         log.info("Time created table: {} ms", stopWatch.getTime());
         stopWatch.reset();
         stopWatch.start();
+
         new CreateStore(NUM_STORES).addStoresInDb();
         stopWatch.stop();
         log.info("Time created stores table: {} ms", stopWatch.getTime());
         stopWatch.reset();
+
         CreateProductsAndAddToStore cP = new CreateProductsAndAddToStore(NUM_STORES,NUM_PRODS);
         stopWatch.start();
+
         cP.createProducts();
+
         stopWatch.stop();
         log.info("Time created products table: {} ms", stopWatch.getTime());
         log.info("RPS products: {} ms", NUM_PRODS/TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
         stopWatch.reset();
         stopWatch.start();
-        cP.addProductInStores();
+
         stopWatch.stop();
         log.info("Time created POS table: {} ms", stopWatch.getTime());
         log.info("RPS: {} ms", NUM_PRODS/ TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));

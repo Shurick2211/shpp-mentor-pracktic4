@@ -9,13 +9,12 @@ import java.sql.*;
 
 public class DataBase {
     private static final Logger log = LoggerFactory.getLogger(DataBase.class);
-    private final Connection connection;
 
     private static final String URL;
     private static final String USER;
     private static final String PASS;
-    //private static final String APP_PROPERTIES = "myApp.properties";
-    private static final String APP_PROPERTIES = "herokuDb.properties";
+    private static final String APP_PROPERTIES = "myApp.properties";
+
     static { LoadProperties properties = new LoadProperties(APP_PROPERTIES);
        URL = properties.getProperty("db.url");
        USER = properties.getProperty("db.user");
@@ -23,40 +22,12 @@ public class DataBase {
     }
 
     public DataBase() {
-        try {
-            connection = DriverManager.getConnection(URL,USER,PASS);
-        } catch (SQLException e) {
-            log.error("Connection Failed!",e);
-            throw new MyRuntimeException(e);
-        }
+
     }
 
-    public Statement getStatement(){
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
-        } catch (SQLException e) {
-            log.warn("Created statement was fail!",e);
-        }
-        return statement;
-    }
 
-    public PreparedStatement getPreparedStatement(String sql) {
-        PreparedStatement statement1 = null;
-        try {
-            statement1 = connection.prepareStatement(sql);
-        } catch (SQLException e) {
-            log.warn("Created preparedStatement was fail!",e);
-        }
-        return statement1;
-    }
 
-    public void closeConnection(){
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            log.error("Connection don't close",e);
-            throw new MyRuntimeException(e);
-        }
-    }
+
+
+
 }

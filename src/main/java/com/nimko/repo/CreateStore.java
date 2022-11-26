@@ -6,9 +6,6 @@ import com.nimko.services.ValidateServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class CreateStore {
@@ -29,20 +26,6 @@ public class CreateStore {
     }
 
     public void addStoresInDb(){
-        DataBase db = new DataBase();
-        Statement statement = db.getStatement();
-        createSqlForAdd().forEach(sql -> {
-            try {
-                statement.addBatch(sql);
-            } catch (SQLException e) { log.warn("Insert store fail!",e);}});
 
-        try {
-            int[] counts = statement.executeBatch();
-            log.info("{} stores was create", Arrays.stream(counts).filter(n -> n >= 0).count());
-            statement.close();
-        } catch (SQLException e) {
-            log.warn("Store creates fail!",e);
-        }
-        db.closeConnection();
     }
 }
