@@ -27,12 +27,11 @@ public class CreateStore {
         return Stream.generate(gen::getStore).filter(validateServices::isValid).limit(numStore).collect(Collectors.toList());
     }
 
-    public void addStoresInDb(){
-        List<StoreDto> stores = createStores();
-        log.info("{} store was created!", stores.size());
+    public void addStoresInDb(List<StoreDto> stores){
         DataBase base = new DataBase();
         MongoCollection<StoreDto> store = base.getDatabase().getCollection(STORE,StoreDto.class);
         store.insertMany(stores);
         base.close();
+        log.info("{} store was added!", stores.size());
     }
 }

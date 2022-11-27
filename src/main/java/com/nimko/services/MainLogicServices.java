@@ -1,5 +1,6 @@
 package com.nimko.services;
 
+import com.nimko.model.StoreDto;
 import com.nimko.repo.CreateStore;
 import com.nimko.repo.DataBase;
 import com.nimko.repo.GetOperation;
@@ -7,19 +8,29 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class MainLogicServices {
     private static final int NUM_STORES = 10;
-    private static final int NUM_PRODS = 1_00;
+    private static final int NUM_PRODS = 1_000_000;
     private static final String TYPE = "type";
     private final StopWatch stopWatch = StopWatch.create();
     private static final Logger log = LoggerFactory.getLogger(MainLogicServices.class);
     public MainLogicServices() {
+        CreateStore storesCreator =  new CreateStore(NUM_STORES, NUM_PRODS/NUM_STORES);
         stopWatch.start();
-        new CreateStore(NUM_STORES, NUM_PRODS/NUM_STORES).addStoresInDb();
+        List<StoreDto> stores = storesCreator.createStores();
         stopWatch.stop();
-        log.info("Time created stores table: {} ms", stopWatch.getTime());
+        log.info("Time creation all stores: {} ms", stopWatch.getTime());
+        log.info("RPS creation products & stores: {} p/s",
+                NUM_PRODS/ TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
+        stopWatch.reset();
+        stopWatch.start();
+        storesCreator.addStoresInDb(stores);
+        stopWatch.stop();
+        log.info("Time added stores table: {} ms", stopWatch.getTime());
         stopWatch.reset();
 /*
         CreateProductsAndAddToStore cP = new CreateProductsAndAddToStore(NUM_STORES,NUM_PRODS);
@@ -37,6 +48,7 @@ public class MainLogicServices {
         stopWatch.reset();
 
  */
+        System.out.println("____________________________");
         DataBase.drop();
     }
 
