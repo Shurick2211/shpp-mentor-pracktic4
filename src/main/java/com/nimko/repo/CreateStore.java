@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public class CreateStore {
     private static final Logger log = LoggerFactory.getLogger(CreateStore.class);
     private final int numStore;
-
+    public static final String STORE = "store";
     public CreateStore(int numStore) {
         this.numStore = numStore;
     }
@@ -27,7 +27,8 @@ public class CreateStore {
 
     public void addStoresInDb(){
         DataBase base = new DataBase();
-        MongoCollection<StoreDto> store = base.getDatabase().getCollection("store",StoreDto.class);
+
+        MongoCollection<StoreDto> store = base.getDatabase().getCollection(STORE,StoreDto.class);
         store.insertMany(createStores());
         base.close();
     }

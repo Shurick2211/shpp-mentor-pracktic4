@@ -54,7 +54,8 @@ public class DataBase {
 
     public static void drop(){
         DataBase dataBase = new DataBase();
-        dataBase.getDatabase().getCollection("store").drop();
+        dataBase.getDatabase().getCollection(CreateStore.STORE).drop();
+        dataBase.getDatabase().getCollection(CreateProductsAndAddToStore.PRODUCT).drop();
         dataBase.close();
     }
 

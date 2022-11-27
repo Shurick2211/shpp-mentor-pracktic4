@@ -1,5 +1,6 @@
 package com.nimko.repo;
 
+import com.mongodb.client.MongoCollection;
 import com.nimko.model.ProductDto;
 import com.nimko.services.ProductGenerator;
 import com.nimko.services.ValidateServices;
@@ -17,7 +18,7 @@ public class CreateProductsAndAddToStore {
     private static final int BATCH_SIZE = 1000;
     private final int numStores;
     private final int numProducts;
-
+    public static final String PRODUCT = "product";
 
     public CreateProductsAndAddToStore(int numStores, int numProducts) {
         this.numStores = numStores;
@@ -25,7 +26,7 @@ public class CreateProductsAndAddToStore {
 
     }
 
-    public List<ProductDto> createSqlForAddProductsInDb() {
+    public List<ProductDto> createProductsInDb() {
         ProductGenerator generator = new ProductGenerator();
         ValidateServices<ProductDto> validateServices = new ValidateServices<>();
         return  Stream.generate(generator::getProduct).filter(validateServices::isValid)
@@ -33,7 +34,11 @@ public class CreateProductsAndAddToStore {
     }
 
     public void createProducts(){
+        DataBase base = new DataBase();
 
+        MongoCollection<ProductDto> store = base.getDatabase().getCollection(PRODUCT,ProductDto.class);
+        store.insertMany(createProductsInDb());
+        base.close();
     }
 
 
