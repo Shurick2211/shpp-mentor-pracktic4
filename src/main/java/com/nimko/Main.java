@@ -6,6 +6,6 @@ public class Main{
 
     public static void main( String[] args ){
         MainLogicServices services = new MainLogicServices();
-        services.printResult();
+       // services.printResult();
     }
 }
