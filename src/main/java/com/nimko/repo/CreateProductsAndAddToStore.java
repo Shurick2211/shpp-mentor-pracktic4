@@ -6,6 +6,8 @@ import com.nimko.services.ValidateServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CreateProductsAndAddToStore {
@@ -23,11 +25,11 @@ public class CreateProductsAndAddToStore {
 
     }
 
-    public Stream<ProductDto> createSqlForAddProductsInDb() {
+    public List<ProductDto> createSqlForAddProductsInDb() {
         ProductGenerator generator = new ProductGenerator();
         ValidateServices<ProductDto> validateServices = new ValidateServices<>();
         return  Stream.generate(generator::getProduct).filter(validateServices::isValid)
-                .limit(numProducts);
+                .limit(numProducts).collect(Collectors.toList());
     }
 
     public void createProducts(){

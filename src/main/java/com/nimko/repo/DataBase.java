@@ -52,4 +52,10 @@ public class DataBase {
         mongoClient.close();
     }
 
+    public static void drop(){
+        DataBase dataBase = new DataBase();
+        dataBase.getDatabase().getCollection("store").drop();
+        dataBase.close();
+    }
+
 }

@@ -13,11 +13,12 @@ import java.util.concurrent.TimeUnit;
 
 public class MainLogicServices {
     private static final int NUM_STORES = 10;
-    private static final int NUM_PRODS = 3_000_000;
+    private static final int NUM_PRODS = 3_000;
     private static final String TYPE = "type";
-    private final StopWatch stopWatch = StopWatch.createStarted();
+    private final StopWatch stopWatch = StopWatch.create();
     private static final Logger log = LoggerFactory.getLogger(MainLogicServices.class);
     public MainLogicServices() {
+        stopWatch.start();
         new CreateStore(NUM_STORES).addStoresInDb();
         stopWatch.stop();
         log.info("Time created stores table: {} ms", stopWatch.getTime());
@@ -40,7 +41,7 @@ public class MainLogicServices {
         stopWatch.reset();
 
  */
-
+        DataBase.drop();
     }
 
     public void printResult(){
