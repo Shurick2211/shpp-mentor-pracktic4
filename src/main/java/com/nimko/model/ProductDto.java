@@ -4,9 +4,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 public class ProductDto {
-    @NotNull
-    @Min(value = 1)
-    private final int id;
+
     @NotNull
     private final String type;
     @NotNull
@@ -16,17 +14,14 @@ public class ProductDto {
     @Min(value = 1000)
     private final int price;
 
-    public ProductDto(int id, String type, String brand, String model, int price) {
-        this.id = id;
+    public ProductDto(String type, String brand, String model, int price) {
         this.type = type;
         this.brand = brand;
         this.model = model;
         this.price = price;
     }
 
-    public int getId() {
-        return id;
-    }
+
 
     public String getType() {
         return type;

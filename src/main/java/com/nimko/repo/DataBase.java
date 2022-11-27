@@ -2,19 +2,14 @@ package com.nimko.repo;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.nimko.model.StoreDto;
+import com.nimko.services.CreateProductsForStore;
 import com.nimko.util.LoadProperties;
-import com.nimko.util.MyRuntimeException;
-import org.bson.Document;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.sql.*;
 
 import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
@@ -54,8 +49,7 @@ public class DataBase {
 
     public static void drop(){
         DataBase dataBase = new DataBase();
-        dataBase.getDatabase().getCollection(CreateStore.STORE).drop();
-        dataBase.getDatabase().getCollection(CreateProductsAndAddToStore.PRODUCT).drop();
+       // dataBase.getDatabase().getCollection(CreateStore.STORE).drop();
         dataBase.close();
     }
 

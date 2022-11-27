@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 public class StoreGeneratorTest extends TestCase {
 
     public void testGetStore() {
-        StoreGenerator generator = StoreGenerator.getGen();
+        StoreGenerator generator = StoreGenerator.getGen(10);
         assertEquals(StoreDto.class, generator.getStore().getClass());
         assertNotNull(generator.getStore());
         assertEquals("Епіцентр-3", generator.getStore().getName());

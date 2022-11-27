@@ -7,19 +7,17 @@ import java.util.Random;
 import java.util.stream.Stream;
 
 public class ProductGenerator {
-    private int id;
     private static final int DELTA_ALPHABET = 26;
     private static final int START_ALPHABET = 'a';
     private static final Random RANDOM = new Random();
 
     public ProductGenerator() {
-        id = 1;
     }
 
     public ProductDto getProduct(){
         final int min = 1000;
         final int max = 20000;
-        return new ProductDto(id++, TYPES.get(RANDOM.nextInt(TYPES.size() - 1)),
+        return new ProductDto(TYPES.get(RANDOM.nextInt(TYPES.size() - 1)),
                 BRANDS.get(RANDOM.nextInt(BRANDS.size() - 1)),
                 getModel(), min + RANDOM.nextInt(max));
     }
