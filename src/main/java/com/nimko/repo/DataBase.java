@@ -3,10 +3,12 @@ package com.nimko.repo;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import com.nimko.services.CreateProductsForStore;
+import com.nimko.model.ProductDto;
 import com.nimko.util.LoadProperties;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.ClassModel;
+import org.bson.codecs.pojo.ClassModelBuilder;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +34,10 @@ public class DataBase {
     private final MongoClient mongoClient;
 
     public DataBase() {
-        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        CodecProvider pojoCodecProvider = PojoCodecProvider.builder()
+              //  .register(ClassModel.builder(ProductDto.class).enableDiscriminator(true).build())
+                .automatic(true)
+                .build();
         CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
         mongoClient = MongoClients.create("mongodb://localhost:27017");
         database = mongoClient.getDatabase("pracktic5").withCodecRegistry(pojoCodecRegistry);

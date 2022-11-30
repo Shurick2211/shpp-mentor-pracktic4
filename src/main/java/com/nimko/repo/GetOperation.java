@@ -1,20 +1,27 @@
 package com.nimko.repo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.mongodb.client.MongoCollection;
+import com.nimko.model.StoreDto;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.nimko.repo.CreateStore.STORE;
 
 public class GetOperation {
-    private static final Logger log = LoggerFactory.getLogger(GetOperation.class);
-    private static final String SQL_ADDRESS =
-            "select s.store_address as address, count(*) " +
-            "as number from products pr inner join pos p on pr.id=p.prod_id " +
-            "inner join stores s on s.id=p.store_id where type=?" +
-            "group by s.id order by number desc limit 1;";
 
+    private final DataBase base;
+    private final MongoCollection<StoreDto> store;
     private GetOperation() {
+        base = new DataBase();
+        store = base.getDatabase().getCollection(STORE,StoreDto.class);
     }
 
     public static String getAddress(String type) {
-    return "";
+        GetOperation operation = new GetOperation();
+        Map<Long,String> stores = new HashMap<>();
+        operation.store.find().forEach(s ->
+            stores.put(s.getProducts().stream().filter(p -> p.getType().equals(type)).count(),s.getAddress()));
+        operation.base.close();
+        return stores.get(stores.keySet().stream().max(Long::compareTo).orElse(0L));
     }
 }

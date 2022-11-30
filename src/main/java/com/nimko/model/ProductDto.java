@@ -6,13 +6,13 @@ import jakarta.validation.constraints.NotNull;
 public class ProductDto {
 
     @NotNull
-    private final String type;
+    private String type;
     @NotNull
-    private final String brand;
+    private String brand;
     @NotNull
-    private final String model;
+    private String model;
     @Min(value = 1000)
-    private final int price;
+    private int price;
 
     public ProductDto(String type, String brand, String model, int price) {
         this.type = type;
@@ -21,7 +21,8 @@ public class ProductDto {
         this.price = price;
     }
 
-
+    public ProductDto() {
+    }
 
     public String getType() {
         return type;
@@ -39,4 +40,19 @@ public class ProductDto {
         return model;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }

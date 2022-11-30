@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 public class MainLogicServices {
     private static final int NUM_STORES = 10;
@@ -24,14 +23,19 @@ public class MainLogicServices {
         List<StoreDto> stores = storesCreator.createStores();
         stopWatch.stop();
         log.info("Time creation all stores: {} ms", stopWatch.getTime());
-        log.info("RPS creation products & stores: {} p/s",
-                NUM_PRODS/ TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
+       // log.info("RPS creation products & stores: {} p/s",
+       //         NUM_PRODS/ TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
         stopWatch.reset();
+        System.out.println("____________________________");
+
         stopWatch.start();
         storesCreator.addStoresInDb(stores);
         stopWatch.stop();
         log.info("Time added stores table: {} ms", stopWatch.getTime());
+       // log.info("RPS added on DB products & stores: {} p/s",
+      //          (NUM_PRODS + NUM_STORES)/ TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
         stopWatch.reset();
+        System.out.println("____________________________");
 /*
         CreateProductsAndAddToStore cP = new CreateProductsAndAddToStore(NUM_STORES,NUM_PRODS);
         stopWatch.start();
@@ -48,15 +52,16 @@ public class MainLogicServices {
         stopWatch.reset();
 
  */
+        printResult();
         System.out.println("____________________________");
         DataBase.drop();
     }
 
     public void printResult(){
-        String sysProp = System.getProperty(TYPE);
+        String type = System.getProperty(TYPE) == null ? getTypeFromConsole() : System.getProperty(TYPE);
         stopWatch.start();
-        log.info("It's address store, where maximal number products of entered type: {}",
-                GetOperation.getAddress(sysProp == null ? getTypeFromConsole() : sysProp));
+        log.info("It's address store, where maximal number products of {} type: {}", type,
+                GetOperation.getAddress(type));
         stopWatch.stop();
         log.info("Time for searched address: {}", stopWatch.getTime());
     }
