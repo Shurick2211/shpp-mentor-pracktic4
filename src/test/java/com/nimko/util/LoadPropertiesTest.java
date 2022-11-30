@@ -9,7 +9,7 @@ public class LoadPropertiesTest {
     @Test
     public void getProperty() {
         LoadProperties properties = new LoadProperties("myApp.properties");
-        assertEquals("postgres", properties.getProperty("db.user"));
+        assertEquals("mongodb://localhost:27017", properties.getProperty("db.local"));
     }
 
 
