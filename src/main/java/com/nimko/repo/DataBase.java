@@ -7,25 +7,20 @@ import com.nimko.util.LoadProperties;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 public class DataBase {
-    private static final Logger log = LoggerFactory.getLogger(DataBase.class);
 
     private static final String URL;
-    private static final String USER;
-    private static final String PASS;
+
     private static final String APP_PROPERTIES = "myApp.properties";
 
     static { LoadProperties properties = new LoadProperties(APP_PROPERTIES);
        URL = properties.getProperty("db.url");
-       USER = properties.getProperty("db.user");
-       PASS = properties.getProperty("db.pass");
+
     }
     private final MongoDatabase base;
     private final MongoClient mongoClient;
@@ -35,7 +30,7 @@ public class DataBase {
                 .automatic(true)
                 .build();
         CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
-        mongoClient = MongoClients.create("mongodb://localhost:27017");
+        mongoClient = MongoClients.create(URL);
         base = mongoClient.getDatabase("pracktic5").withCodecRegistry(pojoCodecRegistry);
 
     }
