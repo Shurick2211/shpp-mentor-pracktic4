@@ -29,7 +29,7 @@ public class CreateStore {
 
     public void addStoresInDb(List<StoreDto> stores){
         DataBase base = new DataBase();
-        MongoCollection<StoreDto> store = base.getDatabase().getCollection(STORE,StoreDto.class);
+        MongoCollection<StoreDto> store = base.getBase().getCollection(STORE,StoreDto.class);
         store.insertMany(stores);
         base.close();
         log.info("{} store was added!", stores.size());

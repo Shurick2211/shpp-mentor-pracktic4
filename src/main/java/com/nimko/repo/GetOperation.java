@@ -13,7 +13,7 @@ public class GetOperation {
     private final MongoCollection<StoreDto> store;
     private GetOperation() {
         base = new DataBase();
-        store = base.getDatabase().getCollection(STORE,StoreDto.class);
+        store = base.getBase().getCollection(STORE,StoreDto.class);
     }
 
     public static String getAddress(String type) {

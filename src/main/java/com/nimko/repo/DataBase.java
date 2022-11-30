@@ -3,12 +3,9 @@ package com.nimko.repo;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import com.nimko.model.ProductDto;
 import com.nimko.util.LoadProperties;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.codecs.pojo.ClassModel;
-import org.bson.codecs.pojo.ClassModelBuilder;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,22 +27,21 @@ public class DataBase {
        USER = properties.getProperty("db.user");
        PASS = properties.getProperty("db.pass");
     }
-    private final MongoDatabase database;
+    private final MongoDatabase base;
     private final MongoClient mongoClient;
 
     public DataBase() {
         CodecProvider pojoCodecProvider = PojoCodecProvider.builder()
-              //  .register(ClassModel.builder(ProductDto.class).enableDiscriminator(true).build())
                 .automatic(true)
                 .build();
         CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
         mongoClient = MongoClients.create("mongodb://localhost:27017");
-        database = mongoClient.getDatabase("pracktic5").withCodecRegistry(pojoCodecRegistry);
+        base = mongoClient.getDatabase("pracktic5").withCodecRegistry(pojoCodecRegistry);
 
     }
 
-    public MongoDatabase getDatabase() {
-        return database;
+    public MongoDatabase getBase() {
+        return base;
     }
 
     public void close(){
@@ -54,7 +50,7 @@ public class DataBase {
 
     public static void drop(){
         DataBase dataBase = new DataBase();
-        dataBase.getDatabase().getCollection(CreateStore.STORE).drop();
+        dataBase.getBase().getCollection(CreateStore.STORE).drop();
         dataBase.close();
     }
 
