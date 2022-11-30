@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MainLogicServices {
     private static final int NUM_STORES = 10;
-    private static final int NUM_PRODS = 1_500_000;
+    private static final int NUM_PRODS = 1_000_000;
     private static final String TYPE = "type";
     private final StopWatch stopWatch = StopWatch.create();
     private static final Logger log = LoggerFactory.getLogger(MainLogicServices.class);
