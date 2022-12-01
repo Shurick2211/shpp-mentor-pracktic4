@@ -55,6 +55,7 @@ public class MainLogicServices {
         log.warn("Time creation all stores: {} ms", stopWatch.getTime());
         stopWatch.reset();
         log.warn("\n____________________________________________________");
+
         printResult();
         log.warn("\n____________________________________________________");
         DataBase.drop();
