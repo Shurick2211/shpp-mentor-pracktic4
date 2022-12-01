@@ -23,37 +23,37 @@ public class MainLogicServices {
         stopWatch.start();
         List<StoreDto> stores = storesCreator.createStores();
         stopWatch.stop();
-        log.info("Time creation all stores: {} ms", stopWatch.getTime());
-        log.info("RPS creation products & stores: {} p/s",
+        log.warn("Time creation all stores: {} ms", stopWatch.getTime());
+        log.warn("RPS creation products & stores: {} p/s",
                 NUM_PRODS/ TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
         stopWatch.reset();
-        log.info("\n_____________________________________________________");
+        log.warn("\n_____________________________________________________");
 
         stopWatch.start();
         storesCreator.addStoresInDb(stores);
         stopWatch.stop();
-        log.info("Time added stores table: {} ms", stopWatch.getTime());
-        log.info("RPS added on DB products & stores: {} p/s",
+        log.warn("Time added stores table: {} ms", stopWatch.getTime());
+        log.warn("RPS added on DB products & stores: {} p/s",
                (NUM_PRODS + NUM_STORES)/ TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
         stopWatch.reset();
-        log.info("\n____________________________________________________");
+        log.warn("\n____________________________________________________");
         printResult();
-        log.info("\n____________________________________________________");
+        log.warn("\n____________________________________________________");
         DataBase.drop();
     }
 
     public void printResult(){
         String type = System.getProperty(TYPE) == null ? getTypeFromConsole() : System.getProperty(TYPE);
         stopWatch.start();
-        log.info("It's address store, where maximal number products of {} type: {}", type,
+        log.warn("It's address store, where maximal number products of {} type: {}", type,
                 GetOperation.getAddress(type));
         stopWatch.stop();
-        log.info("Time for searched address: {}", stopWatch.getTime());
+        log.warn("Time for searched address: {}", stopWatch.getTime());
     }
 
     private String getTypeFromConsole(){
         Scanner scanner = new Scanner(System.in);
-        log.info("Enter type of product?");
+        log.warn("Enter type of product?");
         return scanner.nextLine().trim();
     }
 }
