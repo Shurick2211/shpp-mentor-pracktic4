@@ -8,6 +8,9 @@
     <encoder>
       <pattern>%d{dd.MM.yy HH:mm:ss.SSS} %-5level  %logger{20} - %msg%n</pattern>
     </encoder>
+    <category name="org.mongodb">
+      <priority value="ERROR"/>
+    </category>
   </appender>
 
   <appender name="FILE"
@@ -32,6 +35,6 @@
 
   <root level="info">
     <appender-ref ref="STDOUT" />
-    <appender-ref ref="FILE" />
+<!--    <appender-ref ref="FILE" />-->
   </root>
 </configuration>
