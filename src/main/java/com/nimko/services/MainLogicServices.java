@@ -20,7 +20,6 @@ public class MainLogicServices {
     private static final Logger log = LoggerFactory.getLogger(MainLogicServices.class);
     public MainLogicServices() {
         CreateStore storesCreator =  new CreateStore(NUM_STORES, NUM_PRODS/NUM_STORES);
-
         stopWatch.start();
         List<StoreDto> stores = storesCreator.createStores();
         stopWatch.stop();
