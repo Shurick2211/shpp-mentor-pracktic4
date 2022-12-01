@@ -23,9 +23,7 @@ public class MainLogicServices {
         stopWatch.start();
         new Thread(new ThreadStores(NUM_STORES/2,NUM_PRODS/2)).start();
         new Thread(new ThreadStores(NUM_STORES/2,NUM_PRODS/2)).start();
-        stopWatch.stop();
-        log.warn("Time creation all stores: {} ms", stopWatch.getTime());
-        stopWatch.reset();
+
         /*
         CreateStore storesCreator =  new CreateStore(NUM_STORES, NUM_PRODS/NUM_STORES);
         stopWatch.start();
@@ -49,10 +47,13 @@ public class MainLogicServices {
 
          */
         try {
-            Thread.currentThread().join();
+            Thread.currentThread().join(10000);
         } catch (InterruptedException e) {
             throw new MyRuntimeException(e);
         }
+        stopWatch.stop();
+        log.warn("Time creation all stores: {} ms", stopWatch.getTime());
+        stopWatch.reset();
         log.warn("\n____________________________________________________");
         printResult();
         log.warn("\n____________________________________________________");
