@@ -19,6 +19,9 @@ public class MainLogicServices {
     private final StopWatch stopWatch = StopWatch.create();
     private static final Logger log = LoggerFactory.getLogger(MainLogicServices.class);
     public MainLogicServices() {
+        new Thread(new ThreadStores(NUM_STORES/2,NUM_PRODS/2)).start();
+        new Thread(new ThreadStores(NUM_STORES/2,NUM_PRODS/2)).start();
+        /*
         CreateStore storesCreator =  new CreateStore(NUM_STORES, NUM_PRODS/NUM_STORES);
         stopWatch.start();
         List<StoreDto> stores = storesCreator.createStores();
@@ -29,6 +32,7 @@ public class MainLogicServices {
         stopWatch.reset();
         log.warn("\n_____________________________________________________");
 
+
         stopWatch.start();
         storesCreator.addStoresInDb(stores);
         stopWatch.stop();
@@ -36,6 +40,9 @@ public class MainLogicServices {
         log.warn("RPS added on DB products & stores: {} p/s",
                (NUM_PRODS + NUM_STORES)/ TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
         stopWatch.reset();
+
+
+         */
         log.warn("\n____________________________________________________");
         printResult();
         log.warn("\n____________________________________________________");
