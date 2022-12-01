@@ -4,6 +4,7 @@ import com.nimko.model.StoreDto;
 import com.nimko.repo.CreateStore;
 import com.nimko.repo.DataBase;
 import com.nimko.repo.GetOperation;
+import com.nimko.util.MyRuntimeException;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +20,12 @@ public class MainLogicServices {
     private final StopWatch stopWatch = StopWatch.create();
     private static final Logger log = LoggerFactory.getLogger(MainLogicServices.class);
     public MainLogicServices() {
+        stopWatch.start();
         new Thread(new ThreadStores(NUM_STORES/2,NUM_PRODS/2)).start();
         new Thread(new ThreadStores(NUM_STORES/2,NUM_PRODS/2)).start();
+        stopWatch.stop();
+        log.warn("Time creation all stores: {} ms", stopWatch.getTime());
+        stopWatch.reset();
         /*
         CreateStore storesCreator =  new CreateStore(NUM_STORES, NUM_PRODS/NUM_STORES);
         stopWatch.start();
@@ -43,6 +48,11 @@ public class MainLogicServices {
 
 
          */
+        try {
+            Thread.currentThread().join();
+        } catch (InterruptedException e) {
+            throw new MyRuntimeException(e);
+        }
         log.warn("\n____________________________________________________");
         printResult();
         log.warn("\n____________________________________________________");
